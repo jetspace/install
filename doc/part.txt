@@ -1,0 +1,17 @@
+Todo:
+
+The first step is to create a partition layout. This may sounds difficult, but it is easy.
+
+There are two ways:
+
+IF THIS IS THE ONLY OS ON THE COMPUTER
+
+First create a main partition (Here will your data be storred). Then mark this one as bootable
+
+Then create another one, a linux swap partitition. (the size must be your RAM + 20%. Example: 8 GB ram > ~10GB swap)
+
+then remember the numbers of the partititions (normaly 5 and 6)
+
+IF THIS IS NOT THE ONLY OS
+
+//TODO
