@@ -7,16 +7,16 @@ KeyboardLayout()
   echo " 1> German  QWERTZ"
   echo " 2> English QWERTY"
 
-  read $BUFFER -n 1
+  read -n 1 BUFFER
 
   if [ "$BUFFER" == "1" ]
   then
-  KEYBORAD="loadkeys de-latin1"
+  KEYBOARD="de-latin1"
   elif [ "$BUFFER" == "2" ]
   then
-  KEYBORAD="loadkeys us"
+  KEYBOARD="us"
   else
-  KEYBOARD="loadkeys us"
+  KEYBOARD="us"
   fi
   loadkeys $KEYBOARD
 
