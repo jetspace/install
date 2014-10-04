@@ -116,13 +116,13 @@ BaseSystem ()
 
   echo "Default Packages are: $PACKAGES"
   echo "Also the groups $PACKS would be installed!"
-  echo "If you want to add some packages, you can do this now:"
   echo "Please Note: the Desktop Enviroment will be installed later!"
-  read USER_PACK
 
   echo "now installing, but this maybe take some time, depending on your network speed..."
 
-  pacstrap /mnt $PACKS $PACKAGES $USER_PACK
+  pacstrap /mnt $PACKS $PACKAGES
+
+  sleep 2
 
 }
 
