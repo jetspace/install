@@ -147,5 +147,9 @@ read -s
 #Conifgure base settings
 Config
 
+#Bootloader
+SysLinuxSetup
+
+
 #Now Exit Chroot
 exit
