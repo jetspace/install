@@ -80,14 +80,68 @@ PartDisk()
     mkfs.$BUFFER $DATAPART
   fi
 
+  mount $DATAPART /mnt
+
   echo "Now Creating SWAP Partition..."
 
   mkswap $SWAPPART
   swapon $SWAPPART
 
   echo "Partitioning Complete!"
-  
+
 }
+
+NetworkCreate()
+{
+  clear
+  echo "Now we will setup Network!"
+
+  echo "Please choose your network type:" #only LAN supported :(
+  echo " 1> LAN"
+  read -n 1 NET
+
+  if [ "$NET" == "1" ]
+  then
+  dhcpcd
+  fi
+
+
+}
+
+BaseSystem ()
+{
+  GROUPS="base base-devel"
+  PACKAGES="git curses tree"
+  clear
+
+  echo "Default Packages are: $PACKAGES"
+  echo "Also the groups $GROUPS would be installed!"
+  echo "If you want to add some packages, you can do this now:"
+  echo "Please Note: the Desktop Enviroment will be installed later!"
+  read USER_PACK
+
+  echo "now installing, but this maybe take some time, depending on your network speed..."
+
+  pacstrap /mnt $GROUPS $PACKAGES $USER_PACK
+
+}
+
+SystemSetup()
+{
+  genfstab -p /mnt >> /mnt/etc/fstab #generate FSTAB
+
+  #now copy the config script, to be runed in fakeroot mode...
+  cp src/conf.sh /mnt/conf.sh
+  cp src/logo.ascii /mnt/logo.ascii
+
+  arch-chroot /mnt "bash conf.sh $DATAPART $SWAPPART $KEYBOARD $NET"
+
+  #unmout
+
+  unmount /mnt
+
+}
+
 
 clear
 cat src/logo.ascii
@@ -116,5 +170,22 @@ KeyboardLayout
 #Part Disk
 PartDisk
 
+#Network
+NetworkCreate
 
-#
+#Pacstrap
+BaseSystem
+
+#Setup the System
+SystemSetup
+
+clear
+cat src/logo.ascii
+echo "A free Arch Based Distro"
+echo "------------------------"
+echo -e "\n\n" # New Lines
+
+echo "The Base instalation is now done, system will reboot to continue installation, please remove the install disk!"
+echo "[ENTER]"
+read -s
+reboot
