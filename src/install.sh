@@ -111,7 +111,7 @@ NetworkCreate()
 BaseSystem ()
 {
   PACKS="base base-devel"
-  PACKAGES="git curses tree"
+  PACKAGES="git ncurses tree"
   clear
 
   echo "Default Packages are: $PACKAGES"
