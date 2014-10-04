@@ -22,7 +22,72 @@ KeyboardLayout()
 
 }
 
+PartDisk()
+{
+  clear
+  echo "Please now Create 2 Partitions:"
+  echo " > first : Bootable for Jetspace Data"
+  echo " > second: a SWAP partition"
+  echo "" #newline
+  echo "NOTE: You can change this setup, but only when you know what you are doing!"
+  echo "" #newline
+  echo "If you are ready, press [ENTER] (This operation will delete ANYTHING on your disk!)"
 
+  read -s
+
+  echo "Please enter the Drive (normaly /dev/sda):"
+  read DRIVE
+
+  #Part the disk!
+  cfdisk $DRIVE
+
+  clear
+  echo "Please enter the number of the Data Partition:"
+  read -n 1 BUFFER
+
+  DATAPART="$DRIVE$BUFFER"
+
+  echo "Please enter the number of the SWAP Partition:"
+  read -n 1 BUFFER
+
+  SWAPPART="$DRIVE$BUFFER"
+
+  clear
+
+  echo "Your Configuration:"
+  echo "DATA: $DATAPART"
+  echo "SWAP: $SWAPPART"
+  echo -e "\nCorrect? [y/n]"
+  read -n 1 BUFFER
+
+  if [ "$BUFFER" == "n" ]
+  then
+      echo "Installation Failed!, Please Restart Installer, your system will fail!"
+      exit
+  fi
+
+  clear
+
+  echo "Normaly JetSpace use a ext4 file system. Do you want to use a Custom file system? [y/n]"
+  read -n 1 BUFFER
+
+  if [ "$BUFFER" == "n" ]
+  then
+    mkfs.ext4 $DATAPART
+  else
+    echo "Please enter the file system type:"
+    read BUFFER
+    mkfs.$BUFFER $DATAPART
+  fi
+
+  echo "Now Creating SWAP Partition..."
+
+  mkswap $SWAPPART
+  swapon $SWAPPART
+
+  echo "Partitioning Complete!"
+  
+}
 
 clear
 cat src/logo.ascii
@@ -47,6 +112,9 @@ read -s
 
 #Setup the Keys
 KeyboardLayout
+
+#Part Disk
+PartDisk
 
 
 #
