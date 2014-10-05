@@ -22,12 +22,15 @@ Config ()
   then
   LOCALE="de_DE.utf8"
   elif [ "$BUFFER" == "2" ]
-    LOCALE="en_US.utf8"
+  then
+  LOCALE="en_US.utf8"
   elif [ "$BUFFER" == "3" ]
-      LOCALE="en_GB.utf8"
+  then
+  LOCALE="en_GB.utf8"
   elif [ "$BUFFER" == "4" ]
-      echo "Enter Locale: (language_COUNTRY.utf8 for example: en_US.utf8)"
-      read LOCALE
+  then
+    echo "Enter Locale: (language_COUNTRY.utf8 for example: en_US.utf8)"
+    read LOCALE
   fi
 
   #Set Locale:

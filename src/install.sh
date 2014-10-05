@@ -103,6 +103,8 @@ NetworkCreate()
   if [ "$NET" == "1" ]
   then
   dhcpcd
+  else
+  dhcpcd
   fi
 
 
@@ -135,7 +137,7 @@ SystemSetup()
 
   #unmout
 
-  unmount /mnt
+  umount /mnt
 
 }
 
