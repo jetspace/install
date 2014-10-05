@@ -130,11 +130,8 @@ SystemSetup()
 {
   genfstab -p /mnt >> /mnt/etc/fstab #generate FSTAB
 
-  #now copy the config script, to be runed in fakeroot mode...
-  cp src/conf.sh /mnt/conf.sh
-  cp src/logo.ascii /mnt/logo.ascii
 
-  arch-chroot /mnt "bash conf.sh $DATAPART $SWAPPART $KEYBOARD $NET"
+  bash src/conf.sh $DATAPART $SWAPPART $KEYBOARD $NET
 
   #unmout
 

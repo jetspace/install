@@ -9,7 +9,7 @@ Config ()
   echo "Please Enter a Hostname for this Computer:"
   read HOSTNAME
 
-  echo $HOSTNAME > /etc/hostname
+  echo $HOSTNAME > /mnt/etc/hostname
 
   echo "Please Choose a Loacle Setting:"
   echo " 1> German"
@@ -32,10 +32,10 @@ Config ()
 
   #Set Locale:
 
-  echo "export LC_DATE=$LOCALE" > /etc/locale.conf
-  echo "export LC_NUMERIC=$LOCALE" >> /etc/locale.conf
-  echo "export LC_TIME=$LOCALE" >> /etc/locale.conf
-  echo "export LANG=$LOCALE" >> /etc/locale.conf
+  echo "export LC_DATE=$LOCALE" > /mnt/etc/locale.conf
+  echo "export LC_NUMERIC=$LOCALE" >> /mnt/etc/locale.conf
+  echo "export LC_TIME=$LOCALE" >> /mnt/etc/locale.conf
+  echo "export LANG=$LOCALE" >> /mnt/etc/locale.conf
 
   echo "Setted Locale Succesfully!"
 
@@ -48,7 +48,7 @@ Config ()
 
   #just link UTC
 
-  ln /usr/share/zoneinfo/UTC /etc/localtime
+  arch-chroot /mnt "ln /usr/share/zoneinfo/UTC /etc/localtime"
   #TODOTODOTODOTODO
   #------------------------------------------------------------
 
@@ -61,9 +61,9 @@ Config ()
   echo "" #newline
   echo "[ENTER]"
   read -s
-  nano /etc/locale.gen
+  nano /mnt/etc/locale.gen
 
-  locale-gen
+  arch-chroot /mnt "locale-gen"
 
 
   clear
@@ -79,22 +79,22 @@ Config ()
 
   if [ "$BUFFER" == "y" ]
   then
-    nano /etc/mkinitcpio.conf
+    nano /mnt/etc/mkinitcpio.conf
   fi
 
-  mkinitcpio -p linux
+  arch-chroot /mnt "mkinitcpio -p linux"
 
   echo "Kernel Image generation done!"
 
   echo "Now configuring the root password"
   echo "this must be very safe, because with this you"
   echo "can do ANYTHING on your computer..."
-  passwd
+  arch-chroot /mnt "passwd"
 
 
   echo "now setting up keymap..."
 
-  echo $KEYBOARD > /etc/vconsole.conf
+  echo $KEYBOARD > /mnt/etc/vconsole.conf
 
 }
 
@@ -107,16 +107,18 @@ SysLinuxSetup()
 
   if [ "$BUFFER" == "y" ]
   then
-    pacman -S syslinux
+    arch-chroot /mnt "pacman -S syslinux"
     echo "Download Complete!"
-    syslinux-install_update -i -a -m
+    arch-chroot /mnt "syslinux-install_update -i -a -m"
     clear
     echo "Bootloader Install done!"
     echo "Please Check the Config file of the bootloader, especially for the 'root' line!"
     echo "$(cat /boot/syslinux/syslinux.cfg | grep root=) must be correct!"
     echo "[ENTER]"
 
-    nano /boot/syslinux/syslinux.cfg
+    read -s
+
+    nano /mnt/boot/syslinux/syslinux.cfg
   else
     echo "No Bootloader Installed"
   fi
@@ -134,12 +136,12 @@ KEYBOARD=$3
 NETWORK=$4
 
 
-cat logo.ascii
+cat src/logo.ascii
 echo "A free Arch Based Distro"
 echo "------------------------"
 echo -e "\n\n" # New Lines
 
-echo "Installer Reloaded in FakeRoot mode"
+echo "Installer Reloaded for the second of three steps"
 echo "[ENTER]"
 
 read -s
