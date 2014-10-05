@@ -141,6 +141,13 @@ SystemSetup()
 
 }
 
+PlaceScript()
+{
+  cp src/.bashrc /mnt/root/.bashrc
+  cp src/afterinstall.sh /mnt/root/afterinstall.sh
+  cp src/logo.ascii /mnt/logo.ascii
+}
+
 
 clear
 cat src/logo.ascii
@@ -178,6 +185,9 @@ BaseSystem
 #Setup the System
 SystemSetup
 
+#Prepare Afterinstall
+PlaceScript
+
 clear
 cat src/logo.ascii
 echo "A free Arch Based Distro"
@@ -185,6 +195,7 @@ echo "------------------------"
 echo -e "\n\n" # New Lines
 
 echo "The Base instalation is now done, system will reboot to continue installation, please remove the install disk!"
+echo "Please note that you have to login with the user 'root' and your configured password!"
 echo "[ENTER]"
 read -s
 reboot

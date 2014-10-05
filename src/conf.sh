@@ -97,7 +97,7 @@ Config ()
 
   echo "now setting up keymap..."
 
-  echo $KEYBOARD > /mnt/etc/vconsole.conf
+  echo "KEYMAP=$KEYBOARD" > /mnt/etc/vconsole.conf
 
 }
 
@@ -138,7 +138,7 @@ SWAPPART=$2
 KEYBOARD=$3
 NETWORK=$4
 
-
+clear
 cat src/logo.ascii
 echo "A free Arch Based Distro"
 echo "------------------------"
