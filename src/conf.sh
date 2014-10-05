@@ -85,7 +85,7 @@ Config ()
     nano /mnt/etc/mkinitcpio.conf
   fi
 
-  arch-chroot /mnt "mkinitcpio -p linux"
+  arch-chroot /mnt mkinitcpio -p linux
 
   echo "Kernel Image generation done!"
 
@@ -110,9 +110,9 @@ SysLinuxSetup()
 
   if [ "$BUFFER" == "y" ]
   then
-    arch-chroot /mnt "pacman -S syslinux"
+    arch-chroot /mnt pacman -S syslinux
     echo "Download Complete!"
-    arch-chroot /mnt "syslinux-install_update -i -a -m"
+    arch-chroot /mnt syslinux-install_update -i -a -m
     clear
     echo "Bootloader Install done!"
     echo "Please Check the Config file of the bootloader, especially for the 'root' line!"
