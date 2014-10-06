@@ -11,7 +11,7 @@ read -s
 
 echo "Now installing GNOME desktop..."
 
-pacman -S gnome
+pacman -S gnome xorg-drivers xorg-server xorg-init xorg-utils xorg-server-utils xterm dconf
 
 echo "GNOME installed, now installing other GNOME tools:"
 
