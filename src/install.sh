@@ -135,10 +135,6 @@ SystemSetup()
 
   bash src/conf.sh $DATAPART $SWAPPART $KEYBOARD $NET
 
-  #unmout
-
-  umount /mnt
-
 }
 
 PlaceScript()
@@ -188,6 +184,10 @@ SystemSetup
 
 #Prepare Afterinstall
 PlaceScript
+
+#unmout
+
+umount /mnt
 
 clear
 cat src/logo.ascii
