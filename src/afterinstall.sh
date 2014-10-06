@@ -31,14 +31,8 @@ echo "setting GDM to boot!"
 
 systemctl enable gdm
 
-echo "Now using JetSpceLogo!"
 
-mkdir /opt #just to be sure!
-mkdir /opt/login
-cp /logo.png /opt/login/logo.png
-echo "[org/gnome/login-screen]" > /etc/dconf/db/gdm.d/02-logo
-echo "logo='/opt/login/logo.png'" >> /etc/dconf/db/gdm.d/02-logo
-dconf update
+
 clear
 echo "As the last step, you have to create a user!"
 echo "Username: "
