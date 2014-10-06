@@ -143,9 +143,10 @@ SystemSetup()
 
 PlaceScript()
 {
-  cp src/.bashrc /mnt/root/.bashrc
+  cp src/.bashrc /mnt/root/.bash_profile #.bashrc will be used in X...
   cp src/afterinstall.sh /mnt/root/afterinstall.sh
   cp src/logo.ascii /mnt/logo.ascii
+  cp image/logo.png /mnt/logo.png
 }
 
 
