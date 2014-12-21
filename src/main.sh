@@ -150,9 +150,42 @@ PACKAGES="git ncurses tree dialog"	#Change this if needed
 
 pacstrap /mnt $PACKS $PACKAGES
 
-#FAKEROOT
+#Now, generate FSTAB
 
-#END FAKEROOT
+genfstab -p /mnt >> /mnt/etc/fstab
+
+#hostname
+
+selection=""
+while [ "$selection" == "" ]
+do
+selection=`dialog --no-lines --no-cancel --inputbox $(cat txt/hostname.en) $WINY $WINX 3>&1 1>&2 2>&3`
+done
+HOSTN="$selection"
+
+echo $HOSTN > /mnt/etc/hostname # set hostname
+
+selection=""
+
+while [ "$selection" == "" ]
+do
+selection=`dialog --no-lines --no-cancel  --radiolist "Select your locale:" $WINY $WINX 0 "de_DE.utf8" "Deutsch" 0 "en_US.utf8" "English (US)" 0 "en_GB.utf8" "English (GB)" 0`
+done
+
+LOCALE="$selection"
+
+echo "LANG=$LOCALE" > /mnt/etc/locale.conf
+echo "LC_NUMERIC=$LOCALE" >> /mnt/etc/locale.conf
+echo "LC_TIME=$LOCALE" >> /mnt/etc/locale.conf
+echo "LC_DATE=$LOCALE" >> /mnt/etc/locale.conf
+
+arch-chroot /mnt "ln /usr/share/zoneinfo/UTC /etc/localtime"
+
+dialog --no-lines --text-box txt/local.en $WINY $WINX
+
+nano /mnt/etc/locale.gen
+
+arch-chroot /mnt "locale-gen"
 
 #UNMOUNT
 
