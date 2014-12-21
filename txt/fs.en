@@ -1,0 +1,6 @@
+Now, you need to format the data partition with a specific format, a filesystem. There are
+many popular filesystems liks NTFS or the ext. Like many other Linux distros, JetSpace uses
+ext4 by default. On the next screen you can select a file system. We recommend that you use
+ext4 because it is the most modern one of the ext series.
+
+But, you can choose another ext filesystem if you want.

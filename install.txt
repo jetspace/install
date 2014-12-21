@@ -1,0 +1,6 @@
+keymap : de-latin1
+network: LAN
+drive  : ddddd
+ -data : /dev/ddddd¹
+  -fs  : ext4
+ -swap : /dev/ddddd2
