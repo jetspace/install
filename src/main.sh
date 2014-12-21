@@ -79,7 +79,7 @@ selection=""
 
 dialog --textbox txt/part.en $WINY $WINX
 
-cfdisk $DRIVE #formart the drive
+cfdisk "/dev/$DRIVE" #formart the drive
 
 #PART DISK
 while [ "$selection" == "" ]
