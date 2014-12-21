@@ -159,7 +159,7 @@ genfstab -p /mnt >> /mnt/etc/fstab
 selection=""
 while [ "$selection" == "" ]
 do
-selection=`dialog --no-lines --no-cancel --inputbox $(cat txt/hostname.en) $WINY $WINX 3>&1 1>&2 2>&3`
+selection=`dialog --no-lines --no-cancel --inputbox "$(cat txt/hostname.en)" $WINY $WINX 3>&1 1>&2 2>&3`
 done
 HOSTN="$selection"
 
@@ -169,7 +169,7 @@ selection=""
 
 while [ "$selection" == "" ]
 do
-selection=`dialog --no-lines --no-cancel  --radiolist "Select your locale:" $WINY $WINX 0 "de_DE.utf8" "Deutsch" 0 "en_US.utf8" "English (US)" 0 "en_GB.utf8" "English (GB)" 0`
+selection=`dialog --no-lines --no-cancel  --radiolist "Select your locale:" $WINY $WINX 0 "de_DE.utf8" "Deutsch" 0 "en_US.utf8" "English (US)" 0 "en_GB.utf8" "English (GB)" 0 3>&1 1>&2 2>&3`
 done
 
 LOCALE="$selection"
@@ -181,14 +181,49 @@ echo "LC_DATE=$LOCALE" >> /mnt/etc/locale.conf
 
 arch-chroot /mnt "ln /usr/share/zoneinfo/UTC /etc/localtime"
 
-dialog --no-lines --text-box txt/local.en $WINY $WINX
+dialog --no-lines --textbox txt/local.en $WINY $WINX
 
 nano /mnt/etc/locale.gen
 
 arch-chroot /mnt "locale-gen"
 
+#Kernel Image
+
+dialog  --no-lines --yesno "Do you want to edit the Kernel image configuration file? (advanced mode)" $WINY $WINX
+
+if [ "$?" == "0" ]
+then
+nano /mnt/etc/mkinitcpio.conf
+fi
+
+#Generate image
+
+arch-chroot /mnt mkinitcpio -p linux
+
+#Save Keymap
+
+echo "KEYMAP=$KEYMAP" > /mnt/etc/vconsole.conf
+
+#root password
+
+dialog --no-lines --textbox txt/pass.en $WINY $WINX
+
+arch-chroot /mnt "passwd"
+
+#Syslinux
+
+arch-chroot /mnt pacman -S syslinux
+arch-chroot /mnt syslinux-install_update -i -a -m
+
+#MUST BE FIXED
+nano /mnt/boot/syslinux/syslinux.cfg
+
+dialog --no-lines --textbox txt/done.en $WINY $WINX
+
 #UNMOUNT
 
+unmount /mnt
+
+
 #Reboot
-
-
+reboot
