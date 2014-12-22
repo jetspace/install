@@ -215,6 +215,15 @@ arch-chroot /mnt "passwd"
 arch-chroot /mnt pacman -S syslinux
 arch-chroot /mnt syslinux-install_update -i -a -m
 
+#Set network
+
+if [ "$NETWORK" == "LAN" ]
+then
+arch-chroot /mnt systemctl enable dhcpcd@eth0.service #connect at startup
+fi
+
+bash src/second.sh
+
 #MUST BE FIXED
 nano /mnt/boot/syslinux/syslinux.cfg
 
