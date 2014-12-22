@@ -32,7 +32,7 @@ while [ "$selection" == "" ]
 do
 selection=`dialog --no-lines --no-cancel --inputbox "Username for the new user:" $WINY $WINX 3>&1 1>&2 2>&3`
 done
-USERNAME="$selection"
+USERN="$selection"
 selection=""
 
 
@@ -43,9 +43,9 @@ then
 ADMIN=",wheel"
 fi
 
-useradd -G "bin,disk,log$ADMIN" $USERNAME
+useradd -G "bin,disk,log$ADMIN" $USERN
 
-USER="$USERNAME"
+USER="$USERN"
 
 #Enable user themes
 su $USER -c "gsettings set org.gnome.shell enabled-extensions "$(gsettings get org.gnome.shell enabled-extensions | sed s/"]"/", 'user-theme@gnome-shell-extensions.gcampax.github.com']"/)""
