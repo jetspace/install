@@ -219,7 +219,7 @@ arch-chroot /mnt syslinux-install_update -i -a -m
 
 if [ "$NETWORK" == "LAN" ]
 then
-arch-chroot /mnt systemctl enable dhcpcd@eth0.service #connect at startup
+arch-chroot /mnt systemctl enable dhcpcd
 fi
 
 bash src/second.sh
