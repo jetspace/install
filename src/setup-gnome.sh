@@ -14,12 +14,16 @@ mkdir /usr/share/themes
 mkdir /usr/share/themes/viper
 cp viper-gnome-shell-master/* -r /usr/share/themes/viper/
 
+rm master.tar.gz
+
 #Install Viper GTK
 wget http://github.com/jetspace/viper-gtk/archive/master.tar.gz
 tar -xzf master.tar.gz
 mkdir /usr/share/themes
 mkdir /usr/share/themes/viper
 cp viper-gtk-master/* -r /usr/share/themes/viper/
+
+rm master.tar.gz
 
 #Create User
 
