@@ -35,12 +35,6 @@ done
 USERNAME="$selection"
 selection=""
 
-while [ "$selection" == "" ]
-do
-selection=`dialog --no-lines --no-cancel --inputbox "Little Discription of the user:" $WINY $WINX 3>&1 1>&2 2>&3`
-done
-DISC="$selection"
-selection=""
 
 dialog --no-lines --yesno "Should the user have admin rights?" $WINY $WINX
 
@@ -49,7 +43,7 @@ then
 ADMIN=",wheel"
 fi
 
-useradd -s /bin/bash -c "$DISC" -G "bin,disk,log$ADMIN" $USERNAME
+useradd -G "bin,disk,log$ADMIN" $USERNAME
 
 USER="$USERNAME"
 
