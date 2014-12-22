@@ -17,3 +17,5 @@ arch-chroot /mnt pacman -S gnome gnome-extra #All GNOME tools
 arch-chroot /mnt pacman -S xterm xorg-xinit  #tools
 
 arch-chroot /mnt systemctl enable gdm
+
+bash src/setup-gnome.sh
