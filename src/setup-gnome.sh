@@ -39,6 +39,13 @@ done
 USERN="$selection"
 selection=""
 
+while [ "$selection" == "" ]
+do
+selection=`dialog --no-lines --no-cancel --inputbox "Real Name of the user?:" $WINY $WINX 3>&1 1>&2 2>&3`
+done
+NA="$selection"
+selection=""
+
 
 dialog --no-lines --yesno "Should the user have admin rights?" $WINY $WINX
 
@@ -47,16 +54,16 @@ then
 ADMIN=",wheel"
 fi
 
-useradd -G "bin,disk,log$ADMIN" $USERN
+useradd -c "$NA" -G "bin,disk,log$ADMIN" $USERN
 
 USER="$USERN"
 
 #Enable user themes
-su $USER -c "gsettings set org.gnome.shell enabled-extensions "$(gsettings get org.gnome.shell enabled-extensions | sed s/"]"/", 'user-theme@gnome-shell-extensions.gcampax.github.com']"/)""
+su $USER -c "dbus-launch --exit-with-session gsettings set org.gnome.shell enabled-extensions "$(gsettings get org.gnome.shell enabled-extensions | sed s/"]"/", 'user-theme@gnome-shell-extensions.gcampax.github.com']"/)""
 #Set shell theme
-su $USER -c "gsettings set org.gnome.shell.extensions.user-theme name "viper""
+su $USER -c "dbus-launch --exit-with-session gsettings set org.gnome.shell.extensions.user-theme name "viper""
 #set gtk theme
-su $USER -c "gsettings set org.gnome.desktop.interface gtk-theme "viper""
+su $USER -c "dbus-launch --exit-with-session gsettings set org.gnome.desktop.interface gtk-theme "viper""
 
 #Set User Password
 passwd $USER
