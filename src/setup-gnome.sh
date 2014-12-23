@@ -61,7 +61,7 @@ chown $USERN /home/$USERN
 USER="$USERN"
 
 #Enable user themes
-su $USER -c "dbus-launch --exit-with-session gsettings set org.gnome.shell enabled-extensions "[\'user-theme\@gnome-shell-extensions.gcampax.github.com\']" 2> /dev/null"
+su $USER -c "dbus-launch --exit-with-session gsettings set org.gnome.shell enabled-extensions [\'user-theme\@gnome-shell-extensions.gcampax.github.com\'] 2> /dev/null"
 #Set shell theme
 su $USER -c "dbus-launch --exit-with-session gsettings set org.gnome.shell.extensions.user-theme name "viper"" 2> /dev/null
 #set gtk theme
