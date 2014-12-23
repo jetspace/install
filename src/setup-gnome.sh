@@ -59,11 +59,11 @@ useradd -c "$NA" -G "bin,disk,log$ADMIN" $USERN
 USER="$USERN"
 
 #Enable user themes
-su $USER -c "dbus-launch --exit-with-session gsettings set org.gnome.shell enabled-extensions "$(gsettings get org.gnome.shell enabled-extensions | sed s/"]"/", 'user-theme@gnome-shell-extensions.gcampax.github.com']"/)""
+su $USER -c "dbus-launch --exit-with-session gsettings set org.gnome.shell enabled-extensions "[\'user-theme\@gnome-shell-extensions.gcampax.github.com\']" 2> /dev/null
 #Set shell theme
-su $USER -c "dbus-launch --exit-with-session gsettings set org.gnome.shell.extensions.user-theme name "viper""
+su $USER -c "dbus-launch --exit-with-session gsettings set org.gnome.shell.extensions.user-theme name "viper"" 2> /dev/null
 #set gtk theme
-su $USER -c "dbus-launch --exit-with-session gsettings set org.gnome.desktop.interface gtk-theme "viper""
+su $USER -c "dbus-launch --exit-with-session gsettings set org.gnome.desktop.interface gtk-theme "viper"" 2> /dev/null
 
 #Set User Password
 passwd $USER
