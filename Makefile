@@ -1,2 +1,2 @@
 install:
-	bash src/main.sh
+	DIALOGRC=dialogrc bash src/main.sh

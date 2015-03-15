@@ -5,7 +5,7 @@ WINY="0"
 WINX="0"
 
 
-dialog --no-lines --textbox txt/theme.en $WINY $WINX
+dialog  --textbox txt/theme.en $WINY $WINX
 
 #Install Viper Gnome Shell
 wget http://github.com/jetspace/viper-gnome-shell/archive/master.tar.gz
@@ -34,20 +34,20 @@ selection=""
 
 while [ "$selection" == "" ]
 do
-selection=`dialog --no-lines --no-cancel --inputbox "Username for the new user:" $WINY $WINX 3>&1 1>&2 2>&3`
+selection=`dialog  --no-cancel --inputbox "Username for the new user:" $WINY $WINX 3>&1 1>&2 2>&3`
 done
 USERN="$selection"
 selection=""
 
 while [ "$selection" == "" ]
 do
-selection=`dialog --no-lines --no-cancel --inputbox "Real Name of the user?:" $WINY $WINX 3>&1 1>&2 2>&3`
+selection=`dialog  --no-cancel --inputbox "Real Name of the user?:" $WINY $WINX 3>&1 1>&2 2>&3`
 done
 NA="$selection"
 selection=""
 
 
-dialog --no-lines --yesno "Should the user have admin rights?" $WINY $WINX
+dialog  --yesno "Should the user have admin rights?" $WINY $WINX
 
 if [ "$?" == 0 ]
 then

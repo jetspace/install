@@ -13,7 +13,7 @@ arch-chroot /mnt pacman -S xorg mesa libgl   #base env.
 
 arch-chroot /mnt pacman -S ttf-dejavu  #fonts
 
-arch-chroot /mnt pacman -S gnome gnome-extra #All GNOME tools
+arch-chroot /mnt pacman -S gnome #All GNOME tools
 arch-chroot /mnt pacman -S xterm xorg-xinit  #tools
 
 arch-chroot /mnt systemctl enable gdm
