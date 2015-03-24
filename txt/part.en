@@ -1,0 +1,19 @@
+After you selected a drive, you need to create partitions on it. A partition is a 
+kind of area on the disk which is reserved for a special purpose. JetSpace needs
+two partitions.
+
+The first must be a large one, where you save your data on. You have to make it bootable
+and mark it as Linux file system. for the size you should use the following formula:
+
+TOTAL SIZE - SIZE OF RAM
+
+
+After that you need to create another partition. This one is not a storage for user data. it
+will be used by the OS to store data on it, after the RAM is used. It must be marked as Linux
+SWAP partition. It should NOT be bootable and be as big as the RAM. If the SWAP is too big, you
+waste disk space and your computer will be slower. If the SWAP is too small it is more likely
+that your computer will crash. So you should use the same size as your RAM. This should be
+optimal for most users
+
+Please make sure you understand this before you go on, because you are unable to read this again
+while you create the partitions. Also, you have to remember the numbers of the partitions.
