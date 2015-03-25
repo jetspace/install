@@ -45,8 +45,8 @@ function get_keymap ()
   selection=""
   while [ "$selection" == "" ]
   do
-    local keymaps="$(localectl list-keymaps | sed 's/[a-zA-Z0-9_\-]*/& &/')"
-    selection=`dialog  --no-cancel --radiolist "Select your Keyboard Layout" $WINY $WINX 0 $keymaps 0  3>&1 1>&2 2>&3`
+    local keymaps="$(localectl --no-pager list-keymaps | sed 's/[a-zA-Z0-9_\-]*/& &/')"
+    selection=`dialog  --no-cancel --menu "Select your Keyboard Layout" $WINY $WINX 0 $keymaps 3>&1 1>&2 2>&3`
   done
 
   KEYMAP=$selection
