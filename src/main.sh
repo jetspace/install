@@ -75,7 +75,7 @@ function network_setup ()
 
   if [ "$NETWORK" == "LAN" ]
   then
-  dhcpd #start dhcp deamon
+  dhcpcd #start dhcp deamon
   fi
 
   ping -c 2 www.google.com > /dev/null # 2 Pings to verify network
