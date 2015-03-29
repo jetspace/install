@@ -255,7 +255,7 @@ function set_root_key ()
 function syslinux_setup ()
 {
   #Syslinux
-  arch-chroot /mnt pacman-db-update #fixes bug
+  arch-chroot /mnt pacman-db-upgrade #fixes bug
   arch-chroot /mnt pacman -S syslinux
   arch-chroot /mnt syslinux-install_update -i -a -m
 }
@@ -274,7 +274,7 @@ function finish_base_install ()
   pacman -S git #needed for next step
 
   git clone http://github.com/jetspace/config
-  
+
   bash config/syslinux/install.sh $DATAPART
 
   dialog  --textbox txt/done.en $WINY $WINX
