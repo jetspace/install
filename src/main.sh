@@ -3,7 +3,7 @@
 #Licensed under MIT license
 
 #All Included Modules
-MODULES="license_dialog\nget_keymap\nnetwork_setup\ndisk_part\nsum_all_up\napply_parts\nsoftware_setup\nconf_file_setup\nramdisk_create\nkeymap_save\nset_root_key\nsyslinux_setup\nfinish_base_install\nreboot_install_disk"
+MODULES="license_dialog\nget_keymap\nnetwork_setup\ndisk_part\nsum_all_up\napply_parts\nsoftware_setup\nconf_file_setup\nramdisk_create\nkeymap_save\nset_root_key\nsyslinux_setup\nfinish_base_install\nreboot_install_disk\nsetup_gnome"
 
 WINY=0
 WINX=0
@@ -281,7 +281,51 @@ function finish_base_install ()
 
   #UNMOUNT
 
-  unmount /mnt
+  umount /mnt
+}
+
+function setup_gnome ()
+{
+  dialog --textbox txt/multimedia.en $WINY $WINX
+
+  arch-chroot /mnt pacman -S xorg mesa libgl   #base env.
+  arch-chroot /mnt pacman -S ttf-dejavu  #fonts
+  arch-chroot /mnt pacman -S gnome #GNOME core tools
+  arch-chroot /mnt pacman -S xterm xorg-xinit  #X11 tools
+  arch-chroot /mnt systemctl enable gdm
+
+  #enable admin group wheel
+  cat /mnt/etc/sudoers | sed s/"# %wheel ALL=(ALL) ALL"/"%wheel ALL=(ALL) ALL"/ > /mnt/etc/sudoers
+
+  selection=""
+
+  while [ "$selection" == "" ]
+  do
+  selection=`dialog  --no-cancel --inputbox "Username for the new user:" $WINY $WINX 3>&1 1>&2 2>&3`
+  done
+  USERN="$selection"
+  selection=""
+
+  while [ "$selection" == "" ]
+  do
+  selection=`dialog  --no-cancel --inputbox "Real Name of the user?:" $WINY $WINX 3>&1 1>&2 2>&3`
+  done
+  NA="$selection"
+  selection=""
+
+
+  dialog  --yesno "Should the user have admin rights?" $WINY $WINX
+
+  if [ "$?" == 0 ]
+  then
+  ADMIN=",wheel"
+  fi
+
+  useradd -c "$NA" -G "bin,disk,log$ADMIN" $USERN
+  mkdir /home/$USERN
+  chown $USERN /home/$USERN
+  passwd $USERN
+
 }
 
 function reboot_install_disk ()
@@ -330,6 +374,7 @@ function perform_full_setup ()
     set_root_key
     syslinux_setup
     finish_base_install
+    setup_gnome
     reboot_install_disk
     echo "You should not see this :)"
 
