@@ -321,10 +321,10 @@ function setup_gnome ()
   ADMIN=",wheel"
   fi
 
-  useradd -c "$NA" -G "bin,disk,log$ADMIN" $USERN
-  mkdir /home/$USERN
-  chown $USERN /home/$USERN
-  passwd $USERN
+  arch-chroot /mnt useradd -c "$NA" -G "bin,disk,log$ADMIN" $USERN
+  mkdir /mnt/home/$USERN
+  arch-chroot chown $USERN /home/$USERN
+  arch-chroot passwd $USERN
 
 }
 
