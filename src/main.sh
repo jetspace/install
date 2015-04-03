@@ -323,8 +323,8 @@ function setup_gnome ()
 
   arch-chroot /mnt useradd -c "$NA" -G "bin,disk,log$ADMIN" $USERN
   mkdir /mnt/home/$USERN
-  arch-chroot chown $USERN /home/$USERN
-  arch-chroot passwd $USERN
+  arch-chroot /mnt chown $USERN /home/$USERN
+  arch-chroot /mnt passwd $USERN
 
 }
 
