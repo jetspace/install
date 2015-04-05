@@ -3,7 +3,7 @@
 #Licensed under MIT license
 
 #All Included Modules
-MODULES="license_dialog\nget_keymap\nnetwork_setup\ndisk_part\nsum_all_up\napply_parts\nsoftware_setup\nconf_file_setup\nramdisk_create\nkeymap_save\nset_root_key\nsyslinux_setup\nfinish_base_install\nreboot_install_disk\nsetup_gnome"
+MODULES="license_dialog\nget_keymap\nnetwork_setup\ndisk_part\nsum_all_up\napply_parts\nsoftware_setup\nconf_file_setup\nramdisk_create\nkeymap_save\nset_root_key\nsyslinux_setup\nfinish_base_install\nreboot_install_disk\nsetup_gnome\nsetup_packer\nsetup_plymouth"
 
 WINY=0
 WINX=0
@@ -325,7 +325,28 @@ function setup_gnome ()
   mkdir /mnt/home/$USERN
   arch-chroot /mnt chown $USERN /home/$USERN
   arch-chroot /mnt passwd $USERN
+}
 
+#https://github.com/keenerd/packer
+function setup_packer ()
+{
+  rm master.tar.gz #remove if there are any
+  wget https://github.com/keenerd/packer/archive/master.tar.gz
+  tar -xzf master.tar.gz
+  cp packer-master/packer /mnt/bin/
+  #CURENTLY MISSING: INSTALLING THE MANPAGE!!
+}
+
+function setup_plymouth ()
+{
+  #sync
+  arch-chroot /mnt packer -Syu
+  #install plymouth
+  arch-chroot /mnt packer -S plymouth
+
+  #enable plymouth support in mkinitcpio
+  cat /mnt/etc/mkinitcpio.conf | sed s/'HOOKS="base udev'/'HOOKS="base udev plymouth'/ > /mnt/etc/mkinitcpio.conf
+  arch-chroot /mnt mkinitcpio -p linux
 }
 
 function reboot_install_disk ()
