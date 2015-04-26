@@ -3,7 +3,7 @@
 #Licensed under MIT license
 
 #All Included Modules
-MODULES="license_dialog\nget_keymap\nnetwork_setup\ndisk_part\nsum_all_up\napply_parts\nsoftware_setup\nconf_file_setup\nramdisk_create\nkeymap_save\nset_root_key\nsyslinux_setup\nfinish_base_install\nreboot_install_disk\nsetup_gnome\nsetup_packer\nsetup_plymouth\napply_config_files"
+MODULES="license_dialog\nget_keymap\nnetwork_setup\ndisk_part\nsum_all_up\napply_parts\nsoftware_setup\nconf_file_setup\nramdisk_create\nkeymap_save\nset_root_key\nsyslinux_setup\nfinish_base_install\nreboot_install_disk\nsetup_gnome\nsetup_packer\nsetup_plymouth\napply_config_files\nsetup_pm"
 
 WINY=0
 WINX=0
@@ -350,6 +350,12 @@ function setup_plymouth ()
   arch-chroot /mnt packer -S plymouth
 }
 
+function setup_pm ()
+{
+  arch-chroot /mnt pacman -S gnome-software
+  #TODO: Install JetUp
+}
+
 function reboot_install_disk ()
 {
   #Reboot
@@ -398,6 +404,7 @@ function perform_full_setup ()
     syslinux_setup
     finish_base_install
     setup_gnome
+    setup_pm
     reboot_install_disk
     echo "You should not see this :)"
 
