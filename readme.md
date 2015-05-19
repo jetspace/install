@@ -1,4 +1,6 @@
-Total rewrite of the ARCH installer for JetSpace Linux
+This install script is almost stable, but it is ugly.
 
+Please note :
+===
 
-DONT USE THIS VERSION YET IT WILL FAIL, IT IS JUST A TESTING VERSION
+This is currently not under developement, because we are helping to develop ArchSetup
